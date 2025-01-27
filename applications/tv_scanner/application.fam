@@ -1,0 +1,10 @@
+App(
+    appid="tv_scanner",
+    name="TV Scanner",
+    description="Identifica modelos de TV mediante prueba de señales IR",
+    entry_point="tv_scanner_app",
+    stack_size=2048,
+    icon="icons/tv.png",
+    fap_category="Tools",
+    fap_icon_assets="icons",
+)
