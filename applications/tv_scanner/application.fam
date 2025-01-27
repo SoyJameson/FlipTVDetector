@@ -3,8 +3,11 @@ App(
     name="TV Scanner",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="tv_scanner_app",
-    stack_size=1024,  # Reducido para compatibilidad
+    stack_size=2048,  # ¡Aumentado para evitar desbordamientos!
     icon="tv.png",
-    fap_category="Misc",  # ¡Usa "Misc" en lugar de "Tools"!
-    fap_icon_assets=None,  # Eliminado
+    fap_category="Misc",
+    sources=[
+        "tv_scanner.c",  # Lista explícita de archivos
+        "tv_scanner.h",
+    ]
 )
