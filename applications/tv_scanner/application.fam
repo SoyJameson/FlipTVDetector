@@ -6,5 +6,4 @@ App(
     stack_size=2048,
     icon="icons/tv.png",
     fap_category="Tools",
-    fap_icon_assets="icons",
 )
