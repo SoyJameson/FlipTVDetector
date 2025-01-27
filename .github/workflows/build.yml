@@ -5,32 +5,29 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
+      - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      - name: Install Flipper SDK
+      - name: Set up Flipper Firmware
         run: |
-          sudo apt-get update && sudo apt-get install -y clang cmake protobuf-compiler git
           git clone --recursive https://github.com/flipperdevices/flipperzero-firmware.git
-          cd flipperzero-firmware && ./fbt
+          mkdir -p flipperzero-firmware/applications_user/tv_scanner
+          cp -r applications/tv_scanner/* flipperzero-firmware/applications_user/tv_scanner/
+          cp -r assets/tv_db flipperzero-firmware/assets/
 
-      - name: Copy Assets
+      - name: Install Dependencies
         run: |
-          mkdir -p flipperzero-firmware/assets/tv_db
-          cp -r assets/tv_db/* flipperzero-firmware/assets/tv_db/
+          sudo apt-get update
+          sudo apt-get install -y clang cmake protobuf-compiler git python3-pip
+          python3 -m pip install -r flipperzero-firmware/requirements.txt
 
       - name: Compile FAP
         working-directory: ./flipperzero-firmware
         run: |
-          ./fap FAP_TV_SCANNER
+          ./fbt fap_tv_scanner
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: tv_scanner.fap
-          path: ./flipperzero-firmware/dist/f7-C/fap/tv_scanner.fap
+          path: ./flipperzero-firmware/build/f7-firmware-D/.extapps/tv_scanner.fap
