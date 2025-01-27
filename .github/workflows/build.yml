@@ -11,11 +11,9 @@ jobs:
       - name: Clone Flipper Firmware
         run: |
           git clone --recursive --branch dev https://github.com/flipperdevices/flipperzero-firmware.git
-          cd flipperzero-firmware
-          git submodule update --init --recursive
-          mkdir -p applications_user/tv_scanner
-          cp -r ../applications/tv_scanner/* applications_user/tv_scanner/
-          cp -r ../assets/tv_db assets/
+          mkdir -p flipperzero-firmware/applications_user/tv_scanner
+          cp -r applications/tv_scanner/* flipperzero-firmware/applications_user/tv_scanner/
+          cp -r assets/tv_db flipperzero-firmware/assets/
 
       - name: Install Dependencies
         run: |
