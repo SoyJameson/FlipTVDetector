@@ -1,9 +1,10 @@
 App(
     appid="tv_scanner",
     name="TV Scanner",
-    description="Identifica modelos de TV mediante prueba de señales IR",
+    apptype=FlipperAppType.EXTERNAL,
     entry_point="tv_scanner_app",
-    stack_size=2048,
-    icon="icons/tv.png",
-    fap_category="Tools",
+    stack_size=1024,  # Reducido para compatibilidad
+    icon="tv.png",
+    fap_category="Misc",  # ¡Usa "Misc" en lugar de "Tools"!
+    fap_icon_assets=None,  # Eliminado
 )
