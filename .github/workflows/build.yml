@@ -19,7 +19,8 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y clang cmake protobuf-compiler git python3-pip
-          python3 -m pip install -r flipperzero-firmware/requirements.txt
+          cd flipperzero-firmware  # ¡Cambia al directorio del firmware!
+          python3 -m pip install -r requirements.txt  # Ruta correcta
 
       - name: Compile FAP
         working-directory: ./flipperzero-firmware
