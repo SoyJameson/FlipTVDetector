@@ -1,0 +1,33 @@
+name: Build TV Scanner
+on: [push, workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          path: 'main'
+
+      - name: Set up Flipper SDK
+        uses: Flipper-Zero/flipperzero-firmware-action@v1
+        with:
+          firmware: dev
+          sdk_path: ${{ github.workspace }}/sdk
+
+      - name: Copy Assets
+        run: |
+          mkdir -p main/assets/tv_db
+          cp -r assets/tv_db/* main/assets/tv_db/
+
+      - name: Compile FAP
+        working-directory: ./main
+        run: |
+          ./fbt fap_tv_scanner
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: tv_scanner.fap
+          path: ./main/build/f7-firmware-D/.extapps/tv_scanner.fap
